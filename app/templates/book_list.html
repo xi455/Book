@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}
+                 role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="get" class="d-flex justify-content-center mb-3">
+        <!-- {% csrf_token %} -->
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="bookName" class="col-form-label">查詢書籍</label>
+            </div>
+            <div class="col-auto">
+              <input type="text" name="book_title" id="bookName" class="form-control">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">搜尋</button>
+            </div>
+          </div>
+    </form>    
+    
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">書名</th>
+            <th scope="col">作者</th>
+            <th scope="col">類型</th>
+            <th scope="col">動作</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{item.title}}</td>
+            <td>{{item.author}}</td>
+            <td>{{item.genre}}</td>
+            <td>
+                <a href="{% url 'book-detail' item.id %}" class="btn btn-light btn-sm">查看</a>                
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+{% endblock %}

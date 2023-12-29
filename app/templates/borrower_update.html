@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<h3>帳號修改</h3>
+<form method="post">
+  {% csrf_token %}
+  <div class="form-floating mb-3">
+      {{ form.username.errors }}
+      {% render_field form.username class="form-control" type="text" placeholder="" %}
+      <label for="{{ form.username.id_for_label }}" class="form-label">帳號名稱</label>
+      <div id="usernameHelp" class="form-text">請填入帳號名稱</div>
+  </div>
+  <div class="form-floating mb-3">
+      {{ form.first_name.errors }}
+      {% render_field form.first_name class="form-control" type="text" placeholder="" %}
+      <label for="{{ form.first_name.id_for_label }}" class="form-label">姓名</label>
+      <div id="first_nameHelp" class="form-text">請填入姓名</div>
+  </div>
+  <div class="form-floating mb-3">
+      {{ form.phone_number.errors }}
+      {% render_field form.phone_number class="form-control" type="text" placeholder=""%}
+      <label for="{{ form.phone_number.id_for_label }}" class="form-label">電話號碼</label>
+      <div id="phone_numberHelp" class="form-text">請填入電話號碼</div>
+  </div>
+  <div class="form-floating mb-3">
+      {{ form.address.errors }}
+      {% render_field form.address class="form-control" type="text" placeholder=""%}
+      <label for="{{ form.address.id_for_label }}" class="form-label">住家地址</label>
+      <div id="addressHelp" class="form-text">請填入住家地址</div>
+  </div>
+  <button type="submit" class="btn btn-primary">修改</button>
+</form>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="form-floating mb-3">
+        {{ form.book.errors }}
+        {% render_field form.book class="form-control" type="text" placeholder=""%}
+        <label for="{{ form.book.id_for_label }}" class="form-label">書本名稱</label>
+        <div id="bookHelp" class="form-text">請填入書本名稱</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.borrower.errors }}
+        {% render_field form.borrower class="form-control" type="text" placeholder=""%}
+        <label for="{{ form.borrower.id_for_label }}" class="form-label">借書人</label>
+        <div id="borrowerHelp" class="form-text">請填入借書人</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.borrow_date.errors }}
+        {% render_field form.borrow_date class="form-control" type="date" placeholder=""%}
+        <label for="{{ form.borrow_date.id_for_label }}" class="form-label">借閱日期</label>
+        <div id="borrow_dateHelp" class="form-text">請填入借閱日期</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.return_date.errors }}
+        {% render_field form.return_date class="form-control" type="date" placeholder=""%}
+        <label for="{{ form.return_date.id_for_label }}" class="form-label">歸還日期</label>
+        <div id="return_dateHelp" class="form-text">請填入歸還日期</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.actual_return_date.errors }}
+        {% render_field form.actual_return_date class="form-control" type="date" placeholder=""%}
+        <label for="{{ form.actual_return_date.id_for_label }}" class="form-label">實際歸還日期</label>
+        <div id="actual_return_dateHelp" class="form-text">請填入實際歸還日期</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.fine_amount.errors }}
+        {% render_field form.fine_amount class="form-control" type="text" placeholder=""%}
+        <label for="{{ form.fine_amount.id_for_label }}" class="form-label">罰款金額</label>
+        <div id="fine_amountHelp" class="form-text">請填入罰款金額</div>
+    </div>
+    <div class="form-check mb-3">
+        {{ form.is_return.errors }}
+        {% render_field form.is_return class="form-check-input" type="checkbox" placeholder=""%}
+        <label for="{{ form.is_return.id_for_label }}" class="form-label">是否歸還</label>
+    </div>
+  
+    <button type="submit" class="btn btn-primary">送出</button>
+  </form>
+{% endblock %}

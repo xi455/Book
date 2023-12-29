@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'book-list' %}">圖書系統</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'book-list' %}">書籍目錄</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">銷售熱門</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'book-new-recommend' %}">新書推薦</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'book-logs' %}">借出紀錄</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'borrower-list' %}">讀者列表</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'record-create' %}">借閱表單</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">讀者註冊</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'book-create' %}">書籍新增</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">登入</a>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>

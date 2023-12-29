@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "book"
+version = "0.1.0"
+description = ""
+authors = ["CHENG XI <a3083493@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+isort = "^5.13.2"
+black = "^23.12.1"
+ipython = "^8.19.0"
+django = "4.2.7"
+django-widget-tweaks = "^1.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

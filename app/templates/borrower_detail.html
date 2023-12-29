@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}
+                 role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}    
+    
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">帳號</th>
+            <th scope="col">名字</th>
+            <th scope="col">電話</th>
+            <th scope="col">地址</th>
+            <th scope="col">操作</th>
+          </tr>
+        </thead>
+        <tbody>            
+          <tr>
+            <th scope="row" class="border-bottom-0"></th>
+            <td class="border-bottom-0">{{detail.username}}</td>
+            <td class="border-bottom-0">{{detail.get_short_name}}</td>
+            <td class="border-bottom-0">{{detail.phone_number}}</td>
+            <td class="border-bottom-0">{{detail.address}}</td>
+            <td class="border-bottom-0">
+                <a href="{% url 'borrower-update' detail.id %}" class="btn btn-light btn-sm">修改</a>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+
+    <hr class="my-4">
+    
+    <div class="card">
+        <div class="card-header text-center">
+            欠款金額
+        </div>
+        <div class="card-body">
+            <div class="border rounded p-3 d-flex align-items-center flex-column">
+                <ul class="d-flex align-items-end">
+                    <h3 class="card-title" style="color: red;">
+                        {{ amount }}
+                    </h3>
+                    <span>
+                        元
+                    </span>
+                </ul>
+                <p class="card-text">此讀者目前已欠款金額</p>        
+            </div>            
+        </div>
+    </div>
+    
+    <hr class="my-4">
+
+    <div>
+        {% if book_logs %}
+            <h3>借閱紀錄</h3>
+            {% for log in book_logs %}
+                {% if log.fine_amount %}                
+                    <div class="card mb-3 border border-danger">
+                {% else %}
+                    <div class="card mb-3">
+                {% endif %}
+                        <div class="card-body text-center">
+                           『{{ log.book }}』 於 {{ log.borrow_date }} 借出，預計歸還日期為 {{log.return_date }}
+                        </div>
+                        <a href="{% url 'record-update' log.id %}" class="btn btn-light btn-sm">編輯</a>
+                    </div>
+            {% endfor %}
+            {% else %}
+                <div class="card border-0">
+                    <div class="card-body text-center">
+                    <h4>尚未有拖欠借書紀錄</h4>
+                    </div>
+                </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

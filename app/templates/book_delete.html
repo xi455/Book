@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<form method="post" class="text-center">
+    {% csrf_token %}
+    <h3 class="mb-3">是否確定要刪除 「{{ book }}」 一書 ?</h3>
+    <button type="submit" class="btn btn-outline-danger p-3" style="cursor: pointer;">是的，沒錯，請刪除它</button>
+</form>
+{% endblock %}

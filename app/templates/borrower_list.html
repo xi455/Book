@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}
+                 role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="get" class="d-flex justify-content-center mb-3">
+        <!-- {% csrf_token %} -->
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="userName" class="col-form-label">查詢帳號</label>
+            </div>
+            <div class="col-auto">        
+              <input type="text" name="username" id="userName" class="form-control">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">搜尋</button>
+            </div>
+          </div>
+    </form>    
+    
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">帳號</th>
+            <th scope="col">名字</th>
+            <th scope="col">電話</th>
+            <th scope="col">地址</th>
+            <th scope="col">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{item.username}}</td>
+            <td>{{item.get_short_name}}</td>
+            <td>{{item.phone_number}}</td>
+            <td>{{item.address}}</td>
+            <td>
+                <a href="{% url 'borrower-detail' item.id %}" class="btn btn-light btn-sm">查看</a>                
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+{% endblock %}
