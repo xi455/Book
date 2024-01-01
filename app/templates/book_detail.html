@@ -51,7 +51,11 @@
         {% if book_logs %}
             <h3>借閱紀錄</h3>
             {% for log in book_logs %}
+                {% if log.is_return %}
+                <div class="card mb-3 border border-success">
+                {% else %}
                 <div class="card mb-3">
+                {% endif %}
                     <div class="card-body">
                         於 {{ log.borrow_date }} 借出，預計歸還日期為 {{log.return_date }}
                     </div>

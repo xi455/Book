@@ -13,11 +13,14 @@
           <div id="userNameHelp" class="form-text">請填入您的帳號名稱</div>
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+        {{ form.password.errors }}
+          <label for="{{ form.password.id_for_label }}" class="form-label fs-5">密碼:</label>
+          {% render_field form.password class="form-control fs-5" type="password" %}
+          <div id="passwordHelp" class="form-text">請填入您的密碼</div>
         </div>
-        <div class="mb-2"></div>
+       
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="{% url 'signup' %}" class="btn btn-outline-primary">註冊</a>
     </form>
 </div>
 {% endblock %}

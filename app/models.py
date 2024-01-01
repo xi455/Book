@@ -1,10 +1,19 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.utils.timezone import localtime
 
 from utils.models import BaseModel
 
 # Create your models here.
+
+
+def book_picture_directory_path(instance: "Book", filename: str) -> str:
+    now = localtime().strftime("%y%m%d%H%M")
+    path = "book_picture/{0}".format(
+        "{0}_{1}".format(now, filename),
+    )
+    return path
 
 
 class Book(BaseModel):
@@ -13,6 +22,7 @@ class Book(BaseModel):
     author = models.CharField("作者", max_length=255)
     isbn = models.CharField("國際標準書號", max_length=13)
     published_date = models.DateField("出版日期", default=timezone.now)
+    admission_date = models.DateField("入館日期", default=timezone.now)
 
     class state(models.TextChoices):
         FIRST_STATE = "文學", "文學"
@@ -30,8 +40,16 @@ class Book(BaseModel):
         default=state.FIRST_STATE,
     )
 
+    picture = models.ImageField(
+        upload_to=book_picture_directory_path,
+        verbose_name="圖片",
+        null=True,
+        blank=True,
+        db_comment="存放圖片路徑",
+    )
+
     quantity_in_stock = models.IntegerField("庫存數量")
-    price = models.DecimalField("價格", max_digits=10, decimal_places=2)
+    price = models.DecimalField("進貨價格", max_digits=10, decimal_places=2)
     # 這表示 price 可以儲存最多10位數的數字，其中包括小數點前後的位數，並且小數點後最多有2位。
     description = models.TextField("描述")
 

@@ -9,32 +9,47 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'book-list' %}">書籍目錄</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="#">銷售熱門</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'book-new-recommend' %}">新書推薦</a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'book-logs' %}">借出紀錄</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'borrower-list' %}">讀者列表</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'record-create' %}">借閱表單</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">讀者註冊</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'book-create' %}">書籍新增</a>
-          </li>
-          <!-- <li class="nav-item">
+            {% if perms.app.view_borrowingrecord %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'record-time-out' %}">超時紀錄</a>
+            </li>
+            {% endif %}
+            {% if perms.app.view_borrower %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'borrower-list' %}">讀者列表</a>
+            </li>
+            {% endif %}
+            {% if perms.app.add_borrowingrecord %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'record-create' %}">借閱表單</a>
+            </li>
+            {% endif %}
+            {% if perms.app.add_book %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'book-create' %}">書籍新增</a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+          <li class="nav-item">            
+              <a class="nav-link" href="{% url 'borrower-detail' user.id %}">我的資料</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">登出</a>
+            {% else %}
             <a class="nav-link" href="{% url 'login' %}">登入</a>
-          </li> -->
+            {% endif %}
+          </li>
         </ul>
       </div>
     </div>

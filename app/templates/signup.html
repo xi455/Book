@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-floating mb-3">
+        {{ form.username.errors }}
+        {% render_field form.username class="form-control" type="text" placeholder=""%}
+        <label for="{{ form.username.id_for_label }}" class="form-label">使用者名稱</label>
+        <div id="usernameHelp" class="form-text">請填入使用者名稱</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.password1.errors }}
+        {% render_field form.password1 class="form-control" type="password" placeholder=""%}
+        <label for="{{ form.password1.id_for_label }}" class="form-label">密碼</label>
+        <div id="password1Help" class="form-text">請填入密碼</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.password2.errors }}
+        {% render_field form.password2 class="form-control" type="password" placeholder=""%}
+        <label for="{{ form.password2.id_for_label }}" class="form-label">確認密碼</label>
+        <div id="password2Help" class="form-text">請填入確認密碼</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.first_name.errors }}
+        {% render_field form.first_name class="form-control" type="text" placeholder=""%}
+        <label for="{{ form.first_name.id_for_label }}" class="form-label">帳號姓名</label>
+        <div id="first_nameHelp" class="form-text">請填入帳號姓名</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.phone_number.errors }}
+        {% render_field form.phone_number class="form-control" type="text" placeholder=""%}
+        <label for="{{ form.phone_number.id_for_label }}" class="form-label">手機號碼</label>
+        <div id="phone_numberHelp" class="form-text">請填入手機號碼</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.address.errors }}
+        {% render_field form.address class="form-control" type="text" placeholder=""%}
+        <label for="{{ form.address.id_for_label }}" class="form-label">地址</label>
+        <div id="addressHelp" class="form-text">請填入地址</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">註冊</button>
+  </form>
+{% endblock %}

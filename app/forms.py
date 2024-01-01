@@ -1,6 +1,7 @@
 from django import forms
 
 from app.models import Book, Borrower, BorrowingRecord
+from django.contrib.auth.forms import UserCreationForm
 
 
 class BookForm(forms.ModelForm):
@@ -16,10 +17,16 @@ class BookForm(forms.ModelForm):
         fields = "__all__"
 
 
-class BorrowerForm(forms.ModelForm):
+class BorrowerForm(UserCreationForm):
     class Meta:
         model = Borrower
         fields = ["username", "first_name", "phone_number", "address"]
+
+
+class BorrowerUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Borrower
+        fields = ["first_name", "phone_number", "address"]
 
 
 class BorrowingRecordForm(forms.ModelForm):
@@ -46,9 +53,3 @@ class BorrowingRecordForm(forms.ModelForm):
     class Meta:
         model = BorrowingRecord
         fields = "__all__"
-
-
-# class BorrowingRecordUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = BorrowingRecord
-#         fields = ['fine_amount', 'is_return']

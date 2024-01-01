@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}
+                 role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="get" class="d-flex justify-content-center mb-3">
+        <!-- {% csrf_token %} -->
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="book_title" class="col-form-label">查詢書名</label>
+            </div>
+            <div class="col-auto">        
+              <input type="text" name="book_title" id="book_title" class="form-control">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">搜尋</button>
+            </div>
+          </div>
+    </form>    
+    
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">書名</th>
+            <th scope="col">isbn</th>
+            <th scope="col">價格</th>
+            <th scope="col">罰款金額</th>
+            <th scope="col">應歸還日期</th>
+            <th scope="col">借書者</th>
+            <th scope="col">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{log.book.title}}</td>
+            <td>{{log.book.isbn}}</td>            
+            <td>{{log.book.price}}</td>
+            {% if log.fine_amount %}            
+              <td>{{log.fine_amount}}</td>            
+            {% else %}
+              <td style="color: red;">尚未罰款</td>       
+            {% endif %}     
+            <td>{{log.return_date}}</td>
+            <td>{{log.borrower}}</td>
+            <td>
+                <a href="{% url 'borrower-detail' log.borrower.id %}" class="btn btn-light btn-sm">查看</a>                
+                <a href="{% url 'record-update' log.id %}" class="btn btn-light btn-sm">編輯</a>                
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+{% endblock %}

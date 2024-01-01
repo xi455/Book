@@ -9,6 +9,54 @@
         {% endfor %}
     {% endif %}
 
+    <div class="row my-2">
+        <h3 class="col-11">近三月新書推薦</h3>
+    </div>
+  
+    <div class="" id="star_item">
+        <ul class="row d-flex justify-content-around" style="list-style-type: none;">
+            {% for book in newbook_related_data %}
+            <li class="col-auto d-flex align-items-center flex-column">
+                    <a href="{% url 'book-detail' book.id %}" style="cursor: pointer; color: inherit; text-decoration: none;">
+                    <img
+                    style="width: 7rem;"
+                    src="media/{{ book.picture }}"
+                    alt="">
+                    <div style="text-align: center;">
+                        <span class="text-center">{{ book.title }}</span>
+                    </div>
+                </a>
+                </li>                    
+            {% endfor %}
+        </ul>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row my-2">
+        <h3 class="col-11">熱門書籍</h3>
+    </div>
+
+    <div class="" id="star_item">
+        <ul class="row d-flex justify-content-around" style="list-style-type: none;">
+            {% for book in overall_related_data %}
+            <a href="{% url 'book-detail' book.id %}" class="col-auto" style="cursor: pointer; color: inherit; text-decoration: none;">
+                <li class=" d-flex align-items-center flex-column">
+                    <img
+                    style="width: 7rem;"
+                    src="media/{{ book.picture }}"
+                    alt="">
+                    <div style="text-align: center;">
+                        <span class="text-center">{{ book.title }}</span>
+                    </div>
+                </li>                    
+            </a>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <hr class="my-4">
+
     <form method="get" class="d-flex justify-content-center mb-3">
         <!-- {% csrf_token %} -->
         <div class="row g-3 align-items-center">
@@ -50,3 +98,7 @@
         </tbody>
       </table>
 {% endblock %}
+
+{% block script %}
+    
+{% endblock script %}

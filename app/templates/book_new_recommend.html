@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 {% block content %}
     {% if messages %}
         <br>
@@ -9,20 +10,14 @@
         {% endfor %}
     {% endif %}
 
-    <form method="get" action="{% url 'book-list' %}" class="d-flex justify-content-center mb-3">
-        <!-- {% csrf_token %} -->
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <label for="bookName" class="col-form-label">查詢書籍</label>
-            </div>
-            <div class="col-auto">
-              <input type="text" name="book_title" id="bookName" class="form-control">
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary">搜尋</button>
-            </div>
-          </div>
-    </form>    
+    {{ book_filter.form.non_field_errors }}
+        <form method="get" class="row align-items-center col-md-8">
+            {{ book_filter.form.date_range.errors }}
+            <label for=""
+                   class="fs-5 col-md-2 d-flex align-items-center justify-content-center p-0">查詢日期:</label>
+            {% render_field book_filter.form.date_range class="form-control fs-5 col-md m-1" type="date" id="date_range" %}
+            <button class="btn btn-primary col-md-1 fs-5 btn-sm" type="submit">篩選</button>            
+        </form>   
     
     <table class="table">
         <thead>

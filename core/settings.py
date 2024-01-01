@@ -25,6 +25,10 @@ SECRET_KEY = "django-insecure-+n%4r9f6u^-hs@g7gjd$1zy=7n6m=vd9in!2o(4)663=28(#xc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+LOGIN_REDIRECT_URL = "/"
+
+LOGOUT_REDIRECT_URL = '/'
+
 ALLOWED_HOSTS = []
 
 
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
     "app",
     # 第三方套件
     "widget_tweaks",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -129,6 +134,10 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = BASE_DIR / "assets/"
+
+MEDIA_URL = "media/"
+
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
