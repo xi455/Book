@@ -32,11 +32,6 @@ urlpatterns = [
     path("book/create/", app_views.BookCreateView.as_view(), name="book-create"),
     path("book/<pk>/update/", app_views.BookUpdateView.as_view(), name="book-update"),
     path("book/<pk>/delete/", app_views.book_delete, name="book-delete"),
-    path(
-        "book/new-recommend/",
-        app_views.BookNewRecommendListItem.as_view(),
-        name="book-new-recommend",
-    ),
     path("book/logs/", app_views.RecordLendListItem.as_view(), name="book-logs"),
     path("borrower/", app_views.BorrowerListItem.as_view(), name="borrower-list"),
     path(

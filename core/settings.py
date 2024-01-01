@@ -27,7 +27,7 @@ DEBUG = True
 
 LOGIN_REDIRECT_URL = "/"
 
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = "/"
 
 ALLOWED_HOSTS = []
 
@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     "app",
     # 第三方套件
     "widget_tweaks",
-    "django_filters",
 ]
 
 MIDDLEWARE = [

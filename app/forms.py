@@ -1,7 +1,7 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 
 from app.models import Book, Borrower, BorrowingRecord
-from django.contrib.auth.forms import UserCreationForm
 
 
 class BookForm(forms.ModelForm):

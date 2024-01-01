@@ -1,17 +1,16 @@
 from datetime import datetime, timedelta
 from typing import Any
 
-from django.utils import timezone
 from django.contrib import messages
 from django.db.models import Count, Q
 from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from app.filters import BookFilter
-from app.forms import BookForm, BorrowerForm, BorrowingRecordForm, BorrowerUpdateForm
+from app.forms import BookForm, BorrowerForm, BorrowerUpdateForm, BorrowingRecordForm
 from app.models import Book, Borrower, BorrowingRecord
 
 # Create your views here.
@@ -119,24 +118,6 @@ class RecordTimeOutListView(ListView):
         return queryset
 
 
-class BookNewRecommendListItem(ListView):
-    template_name = "book_new_recommend.html"
-    model = Book
-    context_object_name = "items"
-    paginate_by = 10
-
-    def get(self, request, *args, **kwargs):
-        super().get(request, *args, **kwargs)
-
-        queryset = Book.objects.all()
-        book_filter = BookFilter(self.request.GET, queryset=queryset)
-
-        context = self.get_context_data()
-        context["book_filter"] = book_filter
-
-        return self.render_to_response(context)
-
-
 class BookDetailView(DetailView):
     template_name = "book_detail.html"
     model = Book
@@ -146,7 +127,9 @@ class BookDetailView(DetailView):
         context = super().get_context_data(**kwargs)
 
         book = self.get_object()
-        context["book_logs"] = BorrowingRecord.objects.filter(book=book).order_by("return_date")[:10]
+        context["book_logs"] = BorrowingRecord.objects.filter(book=book).order_by(
+            "return_date"
+        )[:10]
 
         return context
 
@@ -198,14 +181,13 @@ class RecordCreateView(CreateView):
     template_name = "record_create.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
-
         form_instance = form.save(commit=False)
 
-        book_data = form.cleaned_data.get('book')
+        book_data = form.cleaned_data.get("book")
 
         book_data.quantity_in_stock -= 1
         book_data.save()
-    
+
         form_instance.book = book_data
         form_instance.save()
 
@@ -232,14 +214,14 @@ class RecordUpdateView(UpdateView):
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         form_instance = form.save(commit=False)
 
-        book_is_return = form.cleaned_data.get('is_return')
+        book_is_return = form.cleaned_data.get("is_return")
 
         if book_is_return:
-            book_data = form.cleaned_data.get('book')
+            book_data = form.cleaned_data.get("book")
 
             book_data.quantity_in_stock += 1
             book_data.save()
-        
+
             form_instance.book = book_data
             form_instance.save()
 
