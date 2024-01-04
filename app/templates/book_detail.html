@@ -19,7 +19,9 @@
             <th scope="col">出版日期</th>
             <th scope="col">國際標準書號</th>
             <th scope="col">館內庫存數量</th>
+            {% if perms.app.delete_book or perms.app.change_book %}
             <th scope="col">操作</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
@@ -32,10 +34,17 @@
             <td class="border-bottom-0">{{detail.published_date}}</td>
             <td class="border-bottom-0">{{detail.isbn}}</td>
             <td class="border-bottom-0">{{detail.quantity_in_stock}}</td>
+
+            {% if perms.app.delete_book or perms.app.change_book %}
             <td class="border-bottom-0">
+                {% if perms.app.change_book %}
                 <a href="{% url 'book-update' detail.id %}" class="btn btn-light btn-sm">編輯</a>                
+                {% endif %}
+                {% if perms.app.delete_book %}
                 <a href="{% url 'book-delete' detail.id %}" class="btn btn-danger btn-sm">刪除</a>                
+                {% endif %}
             </td>
+            {% endif %}
           </tr>
         </tbody>
     </table>

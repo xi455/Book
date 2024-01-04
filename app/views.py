@@ -20,8 +20,7 @@ class BookListItem(ListView):
     template_name = "book_list.html"
     model = Book
     context_object_name = "items"
-    paginate_by = 10
-    # ordering = "-published_date"
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -61,7 +60,6 @@ class BorrowerListItem(ListView):
     model = Borrower
     context_object_name = "items"
     paginate_by = 10
-    # ordering = "-published_date"
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -78,6 +76,7 @@ class RecordLendListItem(ListView):
     model = BorrowingRecord
     context_object_name = "logs"
     paginate_by = 10
+    ordering = "borrow_date"
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -185,11 +184,16 @@ class RecordCreateView(CreateView):
 
         book_data = form.cleaned_data.get("book")
 
-        book_data.quantity_in_stock -= 1
-        book_data.save()
+        if book_data.quantity_in_stock < 0:
+            messages.error(self.request, "館內已無書籍儲藏！！")        
+            
+            return self.form_invalid(form)
+        else:
+            book_data.quantity_in_stock -= 1
+            book_data.save()
 
-        form_instance.book = book_data
-        form_instance.save()
+            form_instance.book = book_data
+            form_instance.save()
 
         return super().form_valid(form)
 
@@ -199,6 +203,20 @@ class BookUpdateView(UpdateView):
     form_class = BookForm
     success_url = reverse_lazy("book-list")
     template_name = "book_update.html"
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        form = self.get_form()
+        print(form.is_valid())
+        return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form_instance = form.save(commit=False)
+
+        book_stock = form.cleaned_data.get("quantity_in_stock")
+        book_stock += 1
+
+
+        return super().form_valid(form)
 
 
 class RecordUpdateView(UpdateView):

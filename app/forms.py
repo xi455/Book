@@ -11,6 +11,12 @@ class BookForm(forms.ModelForm):
             format="%Y-%m-%d",
         ),
     )
+    admission_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={"type": "date"},
+            format="%Y-%m-%d",
+        ),
+    )
 
     class Meta:
         model = Book

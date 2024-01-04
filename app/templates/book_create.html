@@ -29,6 +29,12 @@
         <div id="published_dateHelp" class="form-text">請填入出版日期</div>
     </div>
     <div class="form-floating mb-3">
+        {{ form.admission_date.errors }}
+        {% render_field form.admission_date class="form-control" type="date" placeholder=""%}
+        <label for="{{ form.admission_date.id_for_label }}" class="form-label">入館日期</label>
+        <div id="admission_dateHelp" class="form-text">請填入入館日期</div>
+    </div>
+    <div class="form-floating mb-3">
         {{ form.genre.errors }}
         {% render_field form.genre class="form-control" type="text" placeholder=""%}
         <label for="{{ form.genre.id_for_label }}" class="form-label">類型</label>

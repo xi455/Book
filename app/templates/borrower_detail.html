@@ -69,7 +69,10 @@
                         <div class="card-body text-center">
                            『{{ log.book }}』 於 {{ log.borrow_date }} 借出，預計歸還日期為 {{log.return_date }}
                         </div>
+                        
+                        {% if perms.app.change_borrowingrecord %}
                         <a href="{% url 'record-update' log.id %}" class="btn btn-light btn-sm">編輯</a>
+                        {% endif %}
                     </div>
             {% endfor %}
             {% else %}
