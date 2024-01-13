@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app.models import Book, Borrower, BorrowingRecord
+from app.models import Book, Borrower, ReserveRecord, BorrowingRecord
 
 # Register your models here.
 
@@ -22,7 +22,23 @@ class BookAdmin(admin.ModelAdmin):
 @admin.register(Borrower)
 class BorrowerAdmin(admin.ModelAdmin):
     list_display = ("id", "username")
-    # search_fields = ('name',)
+
+
+@admin.register(ReserveRecord)
+class ReserveRecordAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "borrower",
+        "book",
+        "reserve_date",
+        "is_active",
+    )
+    list_filter = (
+        "borrower",
+        "book",
+        "reserve_date",
+        "is_active",
+    )
 
 
 @admin.register(BorrowingRecord)

@@ -16,6 +16,9 @@
         <ul class="navbar-nav ms-auto">
             {% if perms.app.view_borrowingrecord %}
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'reserve-list' %}">預約紀錄</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'record-time-out' %}">超時紀錄</a>
             </li>
             {% endif %}
@@ -35,9 +38,12 @@
             </li>
             {% endif %}
             {% if user.is_authenticated %}
-          <li class="nav-item">            
-              <a class="nav-link" href="{% url 'borrower-detail' user.id %}">我的資料</a>
-            </li>
+        <li class="nav-item">            
+            <a class="nav-link" href="{% url 'person-reserve-list' %}">我的預約</a>
+        </li>
+        <li class="nav-item">            
+            <a class="nav-link" href="{% url 'borrower-detail' user.id %}">我的資料</a>
+        </li>
             <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">登出</a>
             {% else %}

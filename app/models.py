@@ -75,6 +75,33 @@ class Borrower(BaseModel, AbstractUser):
         verbose_name_plural = "讀者帳號資訊"
 
 
+class ReserveRecord(BaseModel):
+    id = models.AutoField(primary_key=True)
+    borrower = models.ForeignKey(
+        Borrower,
+        on_delete=models.CASCADE,
+    )
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+    )
+    reserve_date = models.DateField(
+        "預約時間",
+        default=timezone.now,
+    )
+    is_active = models.BooleanField(
+        "預約是否有效",
+        default=True,
+    )
+
+    def __str__(self):
+        return f"{self.borrower} - {self.book}"
+
+    class Meta:
+        verbose_name = "預約記錄資訊"
+        verbose_name_plural = "預約記錄資訊"
+
+
 class BorrowingRecord(BaseModel):
     id = models.AutoField(primary_key=True)
     book = models.ForeignKey(
@@ -91,7 +118,7 @@ class BorrowingRecord(BaseModel):
     fine_amount = models.DecimalField(
         "罰款金額", max_digits=10, decimal_places=2, null=True, blank=True
     )
-    is_return = models.BooleanField("是否歸還", default=False)
+    is_return = models.BooleanField("是否歸還", default=False, blank=True)
 
     class Meta:
         verbose_name = "借書紀錄"

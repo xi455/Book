@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+{% if messages %}
+    <br>
+    {% for message in messages %}
+    {% if message.tags and message.tags == "error" %}
+        <div {% if message.tags %}class="alert alert-danger"{% endif %}
+                role="alert">{{ message }}</div>
+        {% else %}
+        <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}
+                role="alert">{{ message }}</div>
+                {% endif %}
+    {% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="borrrowerID" name="borrower" value="{{borrower}}" placeholder="" disabled="true">
+        <label for="borrowerID" class="form-label">預約者</label>
+        <div id="borrowerHelp" class="form-text">預約者</div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="bookID" name="book" value="{{book}}" placeholder="" disabled="true">
+        <label for="bookID" class="form-label">預約書籍</label>
+        <div id="bookHelp" class="form-text">預約的書籍</div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="date" class="form-control" id="dateID" name="borrow_date" value="{{date}}" placeholder="" disabled="true">
+        <label for="dateID" class="form-label">借閱日期</label>
+        <div id="bookHelp" class="form-text">借閱的日期</div>
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.return_date.errors }}
+        {% render_field form.return_date class="form-control" placeholder=""%}
+        <label for="{{ form.return_date.id_for_label }}" class="form-label">歸還日期</label>
+        <div id="return_dateHelp" class="form-text">請填入歸還日期</div>
+    </div>
+    
+    <input type="hidden" name="reserve_id" value="">
+    <button type="submit" class="btn btn-primary">送出</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}
+                 role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="get" class="d-flex justify-content-center mb-3">
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="UserName" class="col-form-label">查詢預約者</label>
+            </div>
+            <div class="col-auto">
+              <input type="text" name="username" id="UserName" class="form-control">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">搜尋</button>
+            </div>
+          </div>
+    </form>    
+    
+    {% if logs %}
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">書名</th>
+            <th scope="col">作者</th>
+            <th scope="col">類型</th>
+            <th scope="col">預約人</th>
+            <th scope="col">預約日期</th>
+            <th scope="col">狀態</th>
+            <th scope="col">動作</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{log.book.title}}</td>
+            <td>{{log.book.author}}</td>
+            <td>{{log.book.genre}}</td>
+            <td>{{log.borrower}}</td>
+            <td>{{log.reserve_date}}</td>
+            <td>
+                {% if log.is_active %}
+                <img style="max-width: 18%"
+                src="https://fonts.gstatic.com/s/e/notoemoji/15.0/2705/72.png"
+                alt="">
+                {% else %}
+                <img style="max-width: 18%"
+                src="https://fonts.gstatic.com/s/e/notoemoji/15.0/274c/72.png"
+                alt="">
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'reserve-detail' log.id %}" class="btn btn-light btn-sm">查看</a> 
+                {% if log.is_active %}
+                <a href="{% url 'reserve-borrower-create' log.id log.book.id log.reserve_date %}" class="btn btn-light btn-sm">借出</a> 
+                {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="?page={{ page_obj.previous_page_number }}"
+                       aria-label="Previous">
+                        <span aria-hidden="true" class="fs-5">上頁</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link disabled" href="" aria-label="Previous">
+                        <span aria-hidden="true" class="fs-5">上頁</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="page-item">
+                <a class="page-link fs-5" href="#">{{ page_obj.number }}</a>
+            </li>
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="?page={{ page_obj.next_page_number }}"
+                       aria-label="Next">
+                        <span aria-hidden="true" class="fs-5">下頁</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link disabled" href="" aria-label="Next">
+                        <span aria-hidden="true" class="fs-5">下頁</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% else %}
+        <div class="card border-0">
+            <div class="card-body text-center">
+            <h4>尚未有預約紀錄</h4>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
