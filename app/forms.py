@@ -61,6 +61,32 @@ class BorrowingRecordForm(forms.ModelForm):
         fields = "__all__"
 
 
+class BorrowingRecordUpdateForm(forms.ModelForm):
+    borrow_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={"type": "date"},
+            format="%Y-%m-%d",
+        ),
+    )
+    return_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={"type": "date"},
+            format="%Y-%m-%d",
+        ),
+    )
+    actual_return_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={"type": "date"},
+            format="%Y-%m-%d",
+        ),
+        required=True,
+    )
+
+    class Meta:
+        model = BorrowingRecord
+        fields = "__all__"
+
+
 class ReserveRecordForm(forms.ModelForm):
 
     reserve_date = forms.DateField(

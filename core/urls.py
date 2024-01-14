@@ -18,15 +18,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import path
+from django.urls import path, include
 
 from app import views as app_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("login/", LoginView.as_view(), name="login"),
-    path("logout/", LogoutView.as_view(), name="logout"),
-    path("signup/", app_views.BorrowerCreateView.as_view(), name="signup"),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("account/signup/", app_views.BorrowerCreateView.as_view(), name="signup"),
     path("", app_views.BookListItem.as_view(), name="book-list"),
     path("book/<pk>/detail/", app_views.BookDetailView.as_view(), name="book-detail"),
     path("book/create/", app_views.BookCreateView.as_view(), name="book-create"),
@@ -44,6 +43,32 @@ urlpatterns = [
         app_views.BorrowerUpdateView.as_view(),
         name="borrower-update",
     ),
+    path(
+        "reserve/borrower/<pk>/<book_pk>/<date>/create/",
+        app_views.ReserveRecordCreateView.as_view(),
+        name="reserve-borrower-create",
+    ),
+    path(
+        "reserve/",
+        app_views.ReserveRecordListItem.as_view(),
+        name="reserve-list",
+    ),
+    path(
+        "reserve/person/",
+        app_views.ReservePersonListItem.as_view(),
+        name="person-reserve-list",
+    ),
+    path(
+        "reserve/create/<pk>/",
+        app_views.ReserveCreateView.as_view(),
+        name="reserve-create",
+    ),
+    path(
+        "reserve/<pk>/detail/",
+        app_views.ReserveDetailView.as_view(),
+        name="reserve-detail",
+    ),
+    path("reserve/<pk>/<book_pk>/delete/", app_views.reserve_delete, name="reserve-delete"),
     path(
         "record/create/",
         app_views.RecordCreateView.as_view(),

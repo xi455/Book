@@ -6,13 +6,15 @@ from django.db import transaction
 from django.db.models import Count, Q
 from django.forms.models import BaseModelForm
 from django.http import HttpRequest, HttpResponse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from app.forms import BookForm, BorrowerForm, BorrowerUpdateForm, ReserveRecordForm, BorrowingRecordForm, ReserveBorrowingRecordForm
+from app.forms import BookForm, BorrowerForm, BorrowerUpdateForm, ReserveRecordForm, BorrowingRecordForm, BorrowingRecordUpdateForm, ReserveBorrowingRecordForm
 from app.models import Book, Borrower, ReserveRecord, BorrowingRecord
 
 # Create your views here.
@@ -254,6 +256,7 @@ class BorrowerCreateView(CreateView):
     template_name = "signup.html"
 
 
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class ReserveCreateView(CreateView):
     model = ReserveRecord
     form_class = ReserveRecordForm
@@ -364,7 +367,7 @@ class BookUpdateView(UpdateView):
 
 class RecordUpdateView(UpdateView):
     model = BorrowingRecord
-    form_class = BorrowingRecordForm
+    form_class = BorrowingRecordUpdateForm
     template_name = "record_update.html"
 
     def get_success_url(self) -> str:
@@ -375,7 +378,11 @@ class RecordUpdateView(UpdateView):
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         form_instance = form.save(commit=False)
 
+        book_actual_return_date = form.cleaned_data.get("actual_return_date")
         book_is_return = form.cleaned_data.get("is_return")
+
+        if book_actual_return_date is not None and book_is_return == False:
+            form_instance.is_return = True
 
         if book_is_return:
             book_data = form.cleaned_data.get("book")
