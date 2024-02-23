@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic.edit import DeleteView
 
 from app.forms import BookForm, BorrowerForm, BorrowerUpdateForm, ReserveRecordForm, BorrowingRecordForm, BorrowingRecordUpdateForm, ReserveBorrowingRecordForm
 from app.models import Book, Borrower, ReserveRecord, BorrowingRecord
@@ -415,6 +415,11 @@ class BorrowerUpdateView(UpdateView):
         borrower_obj = self.get_object()
         return reverse_lazy("borrower-detail", kwargs={"pk": borrower_obj.pk})
 
+
+class BookDeleteView(DeleteView):
+    model = Book
+    success_url = reverse_lazy("book-list")
+    template_name = "book_delete_generic.html"
 
 def book_delete(request, pk):
     book = get_object_or_404(Book, pk=pk)

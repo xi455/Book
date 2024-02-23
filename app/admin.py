@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from app.models import Book, Borrower, ReserveRecord, BorrowingRecord
 
@@ -20,7 +21,7 @@ class BookAdmin(admin.ModelAdmin):
 
 
 @admin.register(Borrower)
-class BorrowerAdmin(admin.ModelAdmin):
+class BorrowerAdmin(UserAdmin):
     list_display = ("id", "username")
 
 

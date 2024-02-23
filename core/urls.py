@@ -30,7 +30,7 @@ urlpatterns = [
     path("book/<pk>/detail/", app_views.BookDetailView.as_view(), name="book-detail"),
     path("book/create/", app_views.BookCreateView.as_view(), name="book-create"),
     path("book/<pk>/update/", app_views.BookUpdateView.as_view(), name="book-update"),
-    path("book/<pk>/delete/", app_views.book_delete, name="book-delete"),
+    path("book/<pk>/delete/", app_views.BookDeleteView.as_view(), name="book-delete"),
     path("book/logs/", app_views.RecordLendListItem.as_view(), name="book-logs"),
     path("borrower/", app_views.BorrowerListItem.as_view(), name="borrower-list"),
     path(
